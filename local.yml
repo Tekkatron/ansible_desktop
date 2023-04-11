@@ -1,10 +1,78 @@
 ---
+- name: Configurar el escritorio
+  hosts: local
+  become: yes
+  become_method: sudo
 
-- hosts: localhost
-  connection: local
-  become: true
+  vars:
+    aur_packages:
+      - visual-studio-code-bin
+      - oh-my-zsh-git
+      - oh-my-zsh-plugin-syntax-highlighting
+      - oh-my-zsh-plugin-autosuggestions
+      - microsoft-edge-stable-bin
+    pacman_packages:
+      - gnome
+      - i3-wm
+      - alacritty
+      - kitty
+      - libreoffice
+      - nitrogen
+      - zsh
+      - picom
+      - i3status-rust
+      - flatpak
+      - zsh-theme-powerlevel10k
+      - powerline-fonts
+      - awesome-terminal-fonts
+      - xss-lock
+      - xorg-xev
+    flatpak_packages:
+      - com.spotify.Client
 
   tasks:
-    - name: 
-      package:
-        name: htop
+    - name: Allow sudo without password
+      become: true
+      lineinfile:
+        path: /etc/sudoers
+        line: '{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL'
+        validate: 'visudo -cf %s'
+        backup: yes
+
+    - name: Actualizar lista de paquetes disponibles
+      community.general.pacman:
+        update_cache: yes
+
+    - name: Instalar paquetes de Pacman
+      community.general.pacman:
+        name: "{{ pacman_packages }}"
+        state: latest
+
+      
+    - name: Instalar paquetes de AUR usando yay
+      shell: >
+        yay -S --needed --noconfirm {{ aur_packages | join(" ") }}
+      become_user: "{{ ansible_user }}"
+      when: ansible_os_family == "Archlinux"
+
+    - name: Instalar paquetes de Flatpak
+      become: yes
+      become_user: "{{ ansible_user }}"
+      flatpak:
+        name: "{{ flatpak_packages }}"
+
+    - name: Shell configuration
+      shell: >
+        cp /usr/share/oh-my-zsh/zshrc /home/"{{ ansible_user }}/.zshrc"
+      become: yes
+      become_user: "{{ ansible_user }}"
+      
+    - name: Change default shell to Zsh
+      user:
+        name: "{{ ansible_user }}"
+        shell: /bin/zsh
+
+    - name: Configurar el gestor de pantalla lightdm
+      command: "sudo systemctl enable lightdm.service --now"
+      when: ansible_os_family == "Archlinux"
+
