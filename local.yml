@@ -10,6 +10,7 @@
       - oh-my-zsh-git
       - oh-my-zsh-plugin-syntax-highlighting
       - oh-my-zsh-plugin-autosuggestions
+      - ttf-meslo-nerd-font-powerlevel10k
       - microsoft-edge-stable-bin
     pacman_packages:
       - gnome
@@ -75,4 +76,25 @@
     - name: Configurar el gestor de pantalla lightdm
       command: "sudo systemctl enable lightdm.service --now"
       when: ansible_os_family == "Archlinux"
+
+    - name: Crear enlace simbólico para el tema de Zsh
+      file:
+        src: /usr/share/zsh-theme-powerlevel10k
+        dest: /usr/share/oh-my-zsh/custom/themes/zsh-theme-powerlevel10k
+        state: link
+
+    - name: Configurar el archivo .zshrc con el tema y plugins
+      lineinfile:
+        path: /home/{{ ansible_user }}/.zshrc
+        regex: '^ZSH_THEME='
+        line: 'ZSH_THEME="zsh-theme-powerlevel10k/powerlevel10k"'
+        state: present
+
+    - name: Agregar plugins al archivo .zshrc
+      lineinfile:
+        path: /home/{{ ansible_user }}/.zshrc
+        regex: '^plugins='
+        line: 'plugins=(git zsh-autosuggestions zsh-syntax-highlighting)'
+        state: present
+
 
