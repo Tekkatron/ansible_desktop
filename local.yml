@@ -98,14 +98,14 @@
         path: /home/{{ ansible_user }}/.zshrc
         regex: '^plugins='
         line: |
-          'plugins=(
+          plugins=(
           git 
           zsh-autosuggestions
           zsh-syntax-highlighting
           ssh-agent
           docker
           docker-compose
-          gitfast)'
+          gitfast)
         state: present
 
     - name: Detener servicio de LightDM
