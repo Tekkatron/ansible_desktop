@@ -14,7 +14,9 @@
       - microsoft-edge-stable-bin
     pacman_packages:
       - gnome
+      - gdm
       - i3-wm
+      - i3-gnome-flashback
       - alacritty
       - kitty
       - libreoffice
@@ -30,6 +32,10 @@
       - xorg-xev
     flatpak_packages:
       - com.spotify.Client
+    lightdm_stuff:
+      - eos-lightdm-slick-theme
+      - lightdm-slick-greeter
+      - lightdm
 
   tasks:
     - name: Allow sudo without password
@@ -73,9 +79,6 @@
         name: "{{ ansible_user }}"
         shell: /bin/zsh
 
-    - name: Configurar el gestor de pantalla lightdm
-      command: "sudo systemctl enable lightdm.service --now"
-      when: ansible_os_family == "Archlinux"
 
     - name: Crear enlace simbólico para el tema de Zsh
       file:
@@ -94,7 +97,39 @@
       lineinfile:
         path: /home/{{ ansible_user }}/.zshrc
         regex: '^plugins='
-        line: 'plugins=(git zsh-autosuggestions zsh-syntax-highlighting)'
+        line: |
+          'plugins=(
+          git 
+          zsh-autosuggestions
+          zsh-syntax-highlighting
+          ssh-agent
+          docker
+          docker-compose
+          gitfast)'
         state: present
 
+    - name: Detener servicio de LightDM
+      service:
+        name: lightdm
+        state: stopped
+
+    - name: Deshabilitar servicio de LightDM
+      service:
+        name: lightdm
+        enabled: no
+    
+    - name: Uninstall LightDM
+      package:
+        name: "{{ lightdm_stuff }}"
+        state: absent
+
+    - name: Habilitar servicio de GDM
+      service:
+        name: gdm
+        enabled: yes
+
+    - name: Reiniciar GDM
+      service:
+        name: gdm
+        state: restarted
 
