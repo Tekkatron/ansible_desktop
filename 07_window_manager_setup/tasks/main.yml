@@ -1,0 +1,16 @@
+---
+# tasks file for 07_window_manager_setup
+
+- name: Setting up i3wm configuration file
+  copy:
+    src: files/i3wm/config
+    dest: "/home/{{ ansible_user }}/.config/i3/config"
+    owner: "{{ ansible_user }}"
+  become_user: "{{ ansible_user }}" 
+
+- name: Setting up i3status-rust configuration file
+  copy:
+    src: files/i3status-rust
+    dest: "/home/{{ ansible_user }}/.config/i3/"
+    owner: "{{ ansible_user }}"
+  become_user: "{{ ansible_user }}" 

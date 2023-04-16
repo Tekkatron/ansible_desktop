@@ -1,0 +1,58 @@
+icons_format = "{icon}"
+
+[theme]
+theme = "solarized-dark"
+[theme.overrides]
+idle_bg = "#123456"
+idle_fg = "#abcdef"
+
+[icons]
+icons = "awesome6"
+#[icons.overrides]
+#bat = " | | "
+#bat_full = " |X| "
+#bat_charging = " |^| "
+#bat_discharging = " |v| "
+
+[[block]]
+block = "focused_window"
+[block.format]
+full = " $title.str(max_w:200) |"
+short = " $title.str(max_w:200) |"
+
+[[block]]
+block = "cpu"
+format = " CPU: $utilization "
+
+[[block]]
+block = "disk_space"
+path = "/home"
+info_type = "available"
+alert_unit = "GB"
+interval = 20
+warning = 20.0
+alert = 10.0
+format = " /home: $available.eng(w:2) "
+
+[[block]]
+block = "memory"
+format = " $mem_total_used_percents.eng(w:2) "
+format_alt = " $swap_used_percents.eng(w:2) "
+
+[[block]]
+block = "sound"
+format = " VOL: { $volume|} "
+[[block.click]]
+button = "left"
+cmd = "pavucontrol"
+
+[[block]]
+block = "battery"
+format = " BAT: $percentage {$time |}"
+device = "DisplayDevice"
+driver = "upower"
+
+[[block]]
+block = "time"
+interval = 5
+format = " $timestamp.datetime(f:'%a %d/%m--%I:%M %p') "

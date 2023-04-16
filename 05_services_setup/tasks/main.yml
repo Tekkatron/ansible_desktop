@@ -1,0 +1,35 @@
+---
+# tasks file for 05_services_setup
+
+    # GDM related operations
+    - name: Enabling GDM Login Manager
+      service:
+        name: gdm
+        enabled: yes
+
+    - name: Starting GDM service
+      service:
+        name: gdm
+        state: started
+    # Docker related operations
+    - name: Enabling Docker service
+      service:
+        name: gdm
+        enabled: yes
+
+    - name: Start Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: "Adding {{ ansible_user }} to Docker group"
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Restart Docker service
+      systemd:
+        name: docker
+        state: restarted

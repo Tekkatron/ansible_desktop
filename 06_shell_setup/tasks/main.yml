@@ -1,0 +1,107 @@
+---
+# tasks file for 06_shell_setup
+    
+    # Boostrap ZSH configuration from example file 
+    - name: Shell configuration
+      shell: >
+        cp /usr/share/oh-my-zsh/zshrc /home/"{{ ansible_user }}/.zshrc"
+      become: true
+      become_user: "{{ ansible_user }}"
+   
+    - name: Change default shell to Zsh
+      user:
+          name: "{{ ansible_user }}"
+          shell: /bin/zsh
+
+    - name: Adding Powerlevel10k to oh-my-zsh custom themes
+      file:
+          src: /usr/share/zsh-theme-powerlevel10k
+          dest: /usr/share/oh-my-zsh/custom/themes/zsh-theme-powerlevel10k
+          state: link
+
+    - name: Setting up .zshrc file for Powerlevel10k
+      lineinfile:
+          path: /home/{{ ansible_user }}/.zshrc
+          regex: '^ZSH_THEME='
+          line: 'ZSH_THEME="zsh-theme-powerlevel10k/powerlevel10k"'
+          state: present
+
+    - name: Updating .zshrc file with useful plugins
+      lineinfile:
+          path: /home/{{ ansible_user }}/.zshrc
+          regex: '^plugins='
+          line: |
+            plugins=(
+            git 
+            zsh-autosuggestions
+            zsh-syntax-highlighting
+            ssh-agent
+            docker
+            docker-compose
+            gitfast
+            kubectl
+            virtualenv)
+          state: present
+
+    - name: Configuring commands and aliases 
+      blockinfile: 
+          path: /home/{{ ansible_user }}/.zshrc
+          block: |
+            # Add your identities separated by spaces to granular use them
+            #zstyle :omz:plugins:ssh-agent identities <identity1> <identity2>  
+            #   Autocomplete Especial Dirs .. and ...
+            zstyle ':completion:*' special-dirs true
+            zstyle ':completion:*:*:docker-*:*' option-stacking yes
+            #   Setting the convenient slash trail when autocompleting
+            setopt autoparamslash
+            # Convenient web server from current directory
+            alias http-server='docker run -it --rm -p 8080:8080 -v $(pwd):/public danjellz/http-server'
+            alias http-server2='docker run -it --rm -p 8082:8080 -v $(pwd):/public danjellz/http-server'
+            alias http-server3='docker run -it --rm -p 8083:8080 -v $(pwd):/public danjellz/http-server'
+            #   Setup a quick markdown web server to share documentation.
+            alias mdserver="docker run --name mdserver -d --rm -it -v '$(pwd)':/docs -p 3000:3000 dannyben/madness"
+            # MY SSH Tunels
+            alias tunel-demo="ssh -f -D 58000 -C -q -N xxxxxxxxxx"
+            alias tunel-trial="ssh -f -D 59000 -C -q -N xxxxxxxxxxxx -p 22"
+            # Free space
+            alias dupwd='du -hd 1 $(pwd)| sort -h'
+            alias top='vtop --theme=wizard'
+            # Enabled true color support for terminals
+            export NVIM_TUI_ENABLE_TRUE_COLOR=1
+            alias ssh='TERM=xterm-256color ssh'
+            # Youtube Download with best video/audio quality
+            alias ytdl=youtube-dl -f '(bestvideo+bestaudio/best)[protocol^=http]'
+            # Git related alias
+            alias git-tekka="git config --local user.name 'Tekkatron' && git config --local user.email 'xxxxx@xxxxx.com'"
+            #   Neat ps alias
+            alias mm='ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head'
+            #   Know your external ip address from terminal
+            alias myip='host myip.opendns.com resolver1.opendns.com'
+            # Nvim as vim
+            alias vim="nvim"
+            # Quickly edit your .zshrc file
+            alias zz="nvim ~/.zshrc"
+            # Show your terminal logs quickly, e.g. cat /var/log/httpd.log | tb
+            alias tb="nc termbin.com 9999"
+            # Source .zshrc 
+            alias reloadzshrc="source ~/.zshrc"
+            # Reload Xresources assets
+            alias reloadxrdb="xrdb -load ~/.Xresources"
+            #   Get the serial number from your laptop board
+            alias serial="sudo dmidecode -s system-serial-number"
+            #   Check information about your system
+            alias syscheck='sudo dmidecode|grep "System Information" -A 8'
+            # Set nvim as the default editor
+            export EDITOR=/usr/bin/nvim
+            #  Ls aliases
+            alias ll="exa --long --header --git --icons --sort=name"
+            alias llr="exa --long --header --git --icons --sort=name --reverse"
+            alias llt="exa --long --header --git --icons --sort=name --tree"
+            alias lls="exa --long --header --git --icons --sort=size"
+            alias llsr="exa --long --header --git --icons --sort=size --reverse"
+    
+    - name: Source ZSH config
+      shell: >
+        source "/home/{{ ansible_user }}/.zshrc"
+      become: true
+      become_user: "{{ ansible_user }}"

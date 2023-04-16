@@ -1,0 +1,26 @@
+---
+# tasks file for uninstall_lightdm
+
+    - name: Check if LightDM service exists
+      systemd:
+        name: lightdm
+      register: srv
+
+    - name: Stop LightDM service if running
+      service:
+        name: lightdm
+        state: stopped
+      when: srv.status.SubState == "running"
+      register: srv
+    
+    - name: Disable the LightDM service
+      service:
+        name: lightdm
+        enabled: no
+      when: srv.skipped == false
+
+    - name: Uninstall LightDM package
+      package:
+        name: "{{ lightdm_stuff }}"
+        state: absent
+      when: srv.skipped == false

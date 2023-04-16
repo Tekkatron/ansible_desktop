@@ -1,0 +1,7 @@
+---
+# vars file for uninstall_lightdm
+
+    lightdm_stuff:
+      - eos-lightdm-slick-theme
+      - lightdm-slick-greeter
+      - lightdm

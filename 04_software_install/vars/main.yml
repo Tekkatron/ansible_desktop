@@ -1,0 +1,50 @@
+---
+# vars file for 04_software_install
+
+    aur_packages:
+      - visual-studio-code-bin
+      - oh-my-zsh-git
+      - oh-my-zsh-plugin-syntax-highlighting
+      - oh-my-zsh-plugin-autosuggestions
+      - ttf-meslo-nerd-font-powerlevel10k
+      - microsoft-edge-stable-bin
+      - whatsapp-nativefier
+      - xidlehook
+      - ttf-consolas-with-powerline
+    pacman_packages:
+      - python
+      - python-pip
+      - gnome
+      - gdm
+      - exa
+      - i3-wm
+      - i3-gnome-flashback
+      - alacritty
+      - kitty
+      - libreoffice
+      - nitrogen
+      - zsh
+      - picom
+      - i3status-rust
+      - flatpak
+      - zsh-theme-powerlevel10k
+      - powerline-fonts
+      - awesome-terminal-fonts
+      - tmux
+      - xclip
+      - xss-lock
+      - xorg-xev
+      - xsecurelock
+      - ttf-hack-nerd
+      - docker
+      - docker-compose
+    apt_packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python-pip
+      - docker-ce
+
+    flatpak_packages:
+      - com.spotify.Client

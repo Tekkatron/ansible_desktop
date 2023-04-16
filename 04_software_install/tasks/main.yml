@@ -1,0 +1,44 @@
+---
+# tasks file for 04_software_install
+
+    - name: Update package list
+      package:
+        update_cache: yes
+
+    - name: Print OS
+      debug:
+        msg: "Your system is: ==============>> {{ my_os }}" 
+      
+      # Archlinux specific installation
+    - name: Installing Pacman packages
+      community.general.pacman:
+        name: "{{ pacman_packages }}"
+        state: latest
+      when: my_os == "Archlinux"
+      
+    - name: Installing AUR packages using Yay
+      shell: >
+        yay -S --needed --noconfirm {{ aur_packages | join(" ") }}
+      become_user: "{{ ansible_user }}"
+      when: my_os == "Archlinux"
+          
+      # Ubuntu/Debian based distros specific
+    - name: Adding Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }} stable
+        state: present
+        update_cache: yes
+      when: my_os == "Ubuntu"
+
+    - name: Installing APT packages
+      apt:
+        name: "{{ apt_packages }}"
+        state: latest
+      when: my_os == "Ubuntu"
+
+      # OS agnostic install
+    - name: Installing Flatpak packages
+      become: true
+      become_user: "{{ ansible_user }}"
+      flatpak:
+        name: "{{ flatpak_packages }}"

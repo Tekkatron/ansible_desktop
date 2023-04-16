@@ -1,0 +1,11 @@
+---
+# tasks file for set_facts
+
+- name: Installing basic stuff for Ansible
+  package:
+    name: python-jmespath
+    state: present
+
+- name: Setting My_OS variable
+  set_fact:
+    my_os: "{{ hostvars[inventory_hostname] | json_query('ansible_distribution') }}"
