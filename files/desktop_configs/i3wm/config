@@ -8,10 +8,11 @@ workspace_auto_back_and_forth yes
 # Main font for i3wm
 font pango:Hack Bold 0
 
-# set default desktop layout (default is tiling)
+# Set default desktop layout (default is tiling)
 workspace_layout default
+# workspace_layout tabbed
 
-# Force Tabbed Layout
+# Force Tabbed Layout on current workspace
 bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -30,7 +31,7 @@ set $chat   	"5:chat"
 set $news   	"6:mail"
 set $multimedia "7:media"
 set $documentos "8:read"
-set $vms		"9:vms"
+set $vms	"9:vms"
 set $soporte    "10:support" 
 
 # change focus
@@ -65,24 +66,24 @@ set $green     #859900
 set $transparent #00000000
 set $lucent    #00000088
 
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 hide_edge_borders smart
-# start a consolas
+
+# Start new terminal window
 bindsym $mod+Return exec alacritty
 #bindsym $mod+shift+Return exec alacritty -c hacker
 #bindsym $mod+m exec st -c nvim -f Hack:pixelsize=14:antialias=true:autohint=true -e vim 
 #bindsym $mod+shift+m exec alacritty -f Hack:pixelsize=14:antialias=true:autohint=true -e vim
 
 # kill focused window
-bindsym $mod+F12 kill
+bindsym $mod+Delete kill
 
 ### Launchers ###
 
 # Dmenu
-#bindsym $mod+BackSpace exec j4-dmenu-desktop
-#bindsym $mod+Shift+BackSpace exec dmenu_run
+bindsym $mod+BackSpace exec j4-dmenu-desktop
+bindsym $mod+Shift+BackSpace exec dmenu_run
 
 # Rofi
 #bindsym $mod+BackSpace exec rofi -show drun 
@@ -91,7 +92,6 @@ bindsym $mod+F12 kill
 
 # switch to workspace with urgent window automatically
 #for_window [urgent=latest] focus
-
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -123,7 +123,7 @@ bindsym $mod+0 workspace $soporte
 # Worspace back and forth
 bindsym $mod+Tab workspace back_and_forth
 
-# move focused container to workspace
+# Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $internet
 bindsym $mod+Shift+2 move container to workspace $dev
 bindsym $mod+Shift+3 move container to workspace $archivos
@@ -135,14 +135,14 @@ bindsym $mod+Shift+8 move container to workspace $documentos
 bindsym $mod+Shift+9 move container to workspace $vms
 bindsym $mod+Shift+0 move container to workspace $soporte
 
-### WORSPACE CYCLE PER OUTPUT ###
+### WORKSPACE CYCLE PER OUTPUT ###
 bindsym $mod+Next workspace next_on_output 
 bindsym $mod+Prior workspace prev_on_output
 
-# reload the configuration file
+# Reload the configuration file
 bindsym $mod+Shift+c reload
 
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
 ### EXIT i3WM ###
@@ -165,7 +165,7 @@ bindsym XF86AudioMicMute exec pactl set-source-mute 1 toggle
 
 ### Browsers ###
 bindsym $mod+Insert exec microsoft-edge-stable
-bindsym $mod+Delete exec code
+bindsym $mod+F12 exec code
 bindsym Shift+$mod+Insert exec firefox
 # bindsym $mod+Insert exec brave-browser-nightly
 
@@ -178,7 +178,7 @@ bindsym Shift+Ctrl+l exec gnome-screensaver-command --lock
 bindsym  $mod+End exec nautilus --no-desktop -w
 
 
-# resize window (you 				can also use the mouse for that)
+# Resize window (you can also use the mouse for that)
 mode "### RESIZE ###" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -193,14 +193,15 @@ mode "### RESIZE ###" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "### RESIZE ###"
+### RESIZE MODE ###
+bindsym $mod+r mode 
 
 # Disable titlebar
 new_window 1pixel
 new_float 1pixel
 
-#Forcing Focus Wrapping Enabled
-force_focus_wrapping yes
+###     Forcing Focus Wrapping Enabled
+#force_focus_wrapping yes
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
 new_window pixel 4
@@ -209,7 +210,6 @@ new_float pixel 4
 # Gaps (i3-gaps)
 gaps inner 2
 gaps outer 5
-
 smart_gaps on
 
 # Window Border color
@@ -226,11 +226,10 @@ popup_during_fullscreen smart
 focus_follows_mouse yes
 
 ### BAR CONFIGURATION ###
-
  bar {
-   font pango: Consolas Bold 10
+   font pango: Consolas Bold 10, FontAwesome Bold 10
    separator_symbol " "
-   status_command /usr/bin/i3status-rs ~/i3status-rust/config.toml
+   status_command /usr/bin/i3status-rs $HOME/.config/i3/i3status-rust/config.toml
    tray_output primary  
    position top
 
@@ -253,7 +252,7 @@ focus_follows_mouse yes
  }
 
 ### PICOM COMPOSITOR ###
-exec_always pkill /usr/bin/picom; sleep 3 && /usr/bin/picom
+exec_always pkill /usr/bin/picom; sleep 3 && /usr/bin/picom --backend glx --vsync opengl-swc
 
 ###########################################################
 # Application Workspace Assign
@@ -301,7 +300,6 @@ assign [class="zoom"] $documentos
 assign [class="mail-nativefier-804458"] $news
 
 ### Class based windows events ###
-
 for_window [class=.*] border pixel 4
 for_window [class="gnome-calculator"] floating enable border pixel 1
 for_window [class="gnome-calendar"] floating enable border pixel 1
@@ -328,19 +326,18 @@ for_window [class="dropdown"] border pixel 5
 for_window [class="dropdown"] resize set 625 400 
 for_window [class="dropdown"] move scratchpad
 
-
 ### Outputs ###
-set $LG27 "DP-0"
-set $LG27NEW "DP-2"
+#set $MON1 "DP-0"
+#set $MON2 "DP-2"
 
 # Default worspace output assign
-workspace $internet output $LG27NEW
-workspace $dev output $LG27
-workspace $archivosoutput $LG27NEWqq
-workspace $terminal output $LG27
-workspace $chat output $LG27
-workspace $news output $LG27NEW
-workspace $multimedia output $LG27NEW
+workspace $internet output $MON2
+workspace $dev output $MON1
+workspace $archivosoutput $MON2
+workspace $terminal output $MON1
+workspace $chat output $MON1
+workspace $news output $MON2
+workspace $multimedia output $MON2
 
 # Behemoth Setup
 # bindsym $mod+Shift+Next focus output $LG27
@@ -353,12 +350,11 @@ workspace $multimedia output $LG27NEW
 ###  Containers to Adjacent Screens ###
 bindsym $mod+Shift+Next focus output left
 bindsym $mod+Shift+Prior focus output right
+
 # Send-to and Show-from Scratchpad>
 
-
+###  Move entire Workspace to adjacent screen
 bindsym $mod+period move workspace to output next
-
-
 
 # DropdownTerminal
 
@@ -366,7 +362,7 @@ exec_always "alacritty --title=drop -o window.dimensions.columns=120 -o window.d
 for_window [title="drop"] floating enable
 for_window [title="drop"] move scratchpad
 for_window [title="drop"] border pixel 2
-bindsym $mod+\ [title="drop"] scratchpad show; [title=drop] move posit`ion mouse
+bindsym $mod+\ [title="drop"] scratchpad show; [title=drop] move position mouse
 # bindsym $mod+Shift+h [title="drop"] move scratchpad
 
 # # DropdownPythonTerminal
@@ -377,12 +373,11 @@ bindsym $mod+\ [title="drop"] scratchpad show; [title=drop] move posit`ion mouse
 # bindsym $mod+Shift+j [class="droppython"] move scratchpad
 # bindsym $mod+j [class="droppython"] scratchpad show
 
- 
-
 # Pavucontrol
 # bindsym $mod+Home [class="Pavucontrol"] scratchpad show; [class="Pavucontrol"] move position center  
 # for_window [class="Pavucontrol"] move scratchpad
 # exec_always --no-startup-id pavucontrol
+
 # Cisco Anyconnect
 bindsym $mod+backslash [class="Com.cisco.anyconnect.gui"] scratchpad show; [class="Com.cisco.anyconnect.gui"] move position center  
 for_window [class="Com.cisco.anyconnect.gui"] floating enable border pixel 1
@@ -407,79 +402,19 @@ bindsym $mod+o exec obs
 exec --no-startup-id $term -c dropdown -e python
 bindsym $mod+alt+t [class="dropdown"] scratchpad show; [class="dropdown"] move position center
 
-# focus the parent container
+# Focus the parent container/
 bindsym $mod+a focus parent
 
-
-bindsym $mod+Home exec xsecurelock
-
-# Plasma Integration
-
-# Don’t treat Plasma pop-ups as full-sized windows
-for_window [class="plasmashell"] floating enable
-# Don’t spawn an empty window for the Plasma Desktop
-for_window [title="Desktop — Plasma"] kill, floating enable, border none
-# Don’t let notifications and non-interactive pop-up windows steal focus
-no_focus [class="plasmashell" window_type="notification"]
-#no_focus [class="plasmashell" window_type="on_screen_display"]
-
+# This ensure not clashing with hidden window added by Gnome
 for_window [title="Escritorio"] kill
 
-
-### SCREENSHOTS ####
+### SCREENSHOTS using Maim ####
 bindsym $mod+Shift+p exec maim -m 10 -s -k --format png /dev/stdout | xclip -selection clipboard -t image/png -i
 
 ### SCREEN LOCKING ####
 exec_always pkill xidlehook; sleep 1 && xidlehook --not-when-fullscreen --not-when-audio --timer 60 xsecurelock ''
-#bindsym $mod+l exec bash -e "echo 'none'"
+# Lock-screen using Xsecurelock
+bindsym $mod+Home exec xsecurelock
 
 ### ARCHLINUX Updater ####
-exec --no-startup-id pamac-tray
-
-# # Battery Notifications
-# exec_always --no-startup-id i3-battery-popup -n -L 27
-# for_window [title="Battery Warning"] sticky enablee
-
-# # Sticky Notes
-# for_window [class="xpad"] floating enable
-# for_window [class="xpad"] border pixel 0
-# bindsym $mod+shift+u [class="xpad"] move scratchpad
-# bindsym $mod+u [class="xpad"] scratchpad show
-
-
-
-
-# Load stylesheet if exists
-set_from_resource $ilia.stylesheet ilia.stylesheet
-
-## Launch // Application // <> Space ##
-set_from_resource $i3-wm.binding.launcher.app i3-wm.binding.launcher.app space
-set_from_resource $i3-wm.program.launcher.app i3-wm.program.launcher.app ilia -p apps
-#bindsym $mod+$i3-wm.binding.launcher.app exec --no-startup-id $i3-wm.program.launcher.app -t $ilia.stylesheet
-bindsym $mod+BackSpace exec --no-startup-id $i3-wm.program.launcher.app -t $ilia.stylesheet
-
-## Launch // Command // <><Shift> Space ##
-set_from_resource $i3-wm.binding.launcher.cmd i3-wm.binding.launcher.cmd Shift+space
-set_from_resource $i3-wm.program.launcher.cmd i3-wm.program.launcher.cmd ilia -p terminal
-#bindsym $mod+$i3-wm.binding.launcher.cmd exec --no-startup-id $i3-wm.program.launcher.cmd -t $ilia.stylesheet
-bindsym $mod+Shift+BackSpace exec --no-startup-id $i3-wm.program.launcher.cmd -t $ilia.stylesheet
-
-## Launch // Keybinding Viewer // <><Shift> ? ##
-set_from_resource $i3-wm.binding.help i3-wm.binding.help Shift+question
-set_from_resource $i3-wm.program.help i3-wm.program.help ilia -p keybindings
-bindsym $mod+$i3-wm.binding.help exec --no-startup-id $i3-wm.program.help -a -t $ilia.stylesheet
-
-## Navigate // Window by Name // <><Ctrl> Space ##
-set_from_resource $i3-wm.binding.launcher.window i3-wm.binding.launcher.window Ctrl+space
-set_from_resource $i3-wm.program.launcher.window i3-wm.program.launcher.window ilia -p windows
-bindsym $mod+$i3-wm.binding.launcher.window exec --no-startup-id $i3-wm.program.launcher.window -t $ilia.stylesheet
-
-## Launch // File Search // <><Alt> Space ##
-set_from_resource $i3-wm.binding.file_search i3-wm.binding.file_search space
-set_from_resource $i3-wm.program.file_search i3-wm.program.file_search ilia -p tracker
-bindsym $mod+$alt+$li3-wm.binding.file_search exec --no-startup-id $i3-wm.program.file_search -t $ilia.stylesheet
-
-## Launch // Look Selector // <><Alt> l ##
-set_from_resource $i3-wm.binding.look_selector i3-wm.binding.look_selector l
-set_from_resource $i3-wm.program.look_selector i3-wm.program.look_selector regolith-look-selector
-bindsym $mod+$alt+$i3-wm.binding.look_selector exec --no-startup-id $i3-wm.program.look_selector -t $ilia.stylesheet
+#exec --no-startup-id pamac-tray
