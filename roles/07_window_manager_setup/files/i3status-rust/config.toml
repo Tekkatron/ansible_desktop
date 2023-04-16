@@ -22,7 +22,7 @@ short = " $title.str(max_w:200) |"
 
 [[block]]
 block = "cpu"
-format = " CPU: $utilization "
+format = " CPU:$utilization "
 
 [[block]]
 block = "disk_space"
@@ -36,12 +36,12 @@ format = " /home: $available.eng(w:2) "
 
 [[block]]
 block = "memory"
-format = " $mem_total_used_percents.eng(w:2) "
+format = " RAM:$mem_total_used_percents.eng(w:2) "
 format_alt = " $swap_used_percents.eng(w:2) "
 
 [[block]]
 block = "sound"
-format = " VOL: { $volume|} "
+format = " VOL:{$volume|} "
 [[block.click]]
 button = "left"
 cmd = "pavucontrol"
@@ -55,4 +55,4 @@ driver = "upower"
 [[block]]
 block = "time"
 interval = 5
-format = " $timestamp.datetime(f:'%a %d/%m--%I:%M %p') "
+format = " $timestamp.datetime(f:'%a %d/%m  %I:%M %p') "

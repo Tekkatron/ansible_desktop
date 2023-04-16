@@ -227,7 +227,7 @@ focus_follows_mouse yes
 
 ### BAR CONFIGURATION ###
  bar {
-   font pango: TerminusTFF Nerd Font Bold 10
+   font pango: Consolas Bold 10
    separator_symbol " "
    status_command /usr/bin/i3status-rs $HOME/.config/i3/i3status-rust/config.toml
    tray_output primary  

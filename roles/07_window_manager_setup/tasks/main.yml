@@ -14,3 +14,11 @@
     dest: "/home/{{ ansible_user }}/.config/i3/"
     owner: "{{ ansible_user }}"
   become_user: "{{ ansible_user }}" 
+
+  # Theme setup
+- name: Install Themes
+  shell: >
+    yay -S --needed --noconfirm {{ aur_themes | join(" ") }}
+  become_user: "{{ ansible_user }}"
+  when: my_os == "Archlinux"
+

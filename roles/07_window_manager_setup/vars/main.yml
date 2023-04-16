@@ -1,2 +1,5 @@
 ---
 # vars file for 07_window_manager_setup
+
+aur_themes:
+  - gnome-theme-macos-mojave-meta
