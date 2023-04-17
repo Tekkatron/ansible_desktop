@@ -1,6 +1,11 @@
 ---
 # tasks file for 07_window_manager_setup
 
+- name: Make sure configuration folder for i3wm exists
+  file: 
+    path: "/home/{{ ansible_user }}/.config/i3
+    state: directory
+
 - name: Setting up i3wm configuration file
   copy:
     src: files/i3wm/config
