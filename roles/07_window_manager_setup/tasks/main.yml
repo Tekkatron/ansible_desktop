@@ -5,6 +5,7 @@
   file: 
     path: "/home/{{ ansible_user }}/.config/i3
     state: directory
+    owner: "{{ ansible_user }}"
 
 - name: Setting up i3wm configuration file
   copy:
