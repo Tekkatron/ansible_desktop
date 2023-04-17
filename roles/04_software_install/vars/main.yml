@@ -13,6 +13,7 @@
       - ttf-consolas-with-powerline
       - i3-gnome-flashback
     pacman_packages:
+      - maim
       - neovim
       - dmenu
       - j4-dmenu-desktop
