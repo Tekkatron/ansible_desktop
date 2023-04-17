@@ -3,7 +3,7 @@
 
 - name: Make sure configuration folder for i3wm exists
   file: 
-    path: "/home/{{ ansible_user }}/.config/i3
+    path: "/home/{{ ansible_user }}/.config/i3"
     state: directory
     owner: "{{ ansible_user }}"
 
