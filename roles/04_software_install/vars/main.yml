@@ -11,14 +11,16 @@
       - whatsapp-nativefier
       - xidlehook
       - ttf-consolas-with-powerline
+      - i3-gnome-flashback
     pacman_packages:
+      - dmenu
+      - j4-dmenu-desktop
       - python
       - python-pip
       - gnome
       - gdm
       - exa
       - i3-wm
-      - i3-gnome-flashback
       - alacritty
       - kitty
       - libreoffice
