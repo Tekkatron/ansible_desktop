@@ -1,0 +1,23 @@
+# Xorg configuration for video Intel based systems
+
+Section "Device"
+    Identifier "Intel Graphics"
+    Driver "intel"
+    Option "TearFree" "true"         # Enabling Vsync to avoid tearing
+    Option "AccelMethod" "sna"      # SNA as hardware acceleration method
+    Option "DRI" "3"                 # Performance improve using DRI3
+EndSection
+
+Section "DRI"
+    Group "video"
+    Mode 0666
+EndSection
+
+Section "Extensions"
+    Option "Composite" "Enable"
+EndSection
+
+Section "Module"
+    Load "dri3"
+    Load "glamoregl"
+EndSection

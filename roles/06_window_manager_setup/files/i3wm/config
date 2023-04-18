@@ -316,7 +316,7 @@ for_window [urgent=latest] focus
 ### Spotify ###
 for_window [class="Spotify"] floating enable
 for_window [class="Spotify"] border pixel 0
-for_window [class="Spotify"] resize set 1920 1080
+for_window [class="Spotify"] resize set 1366 768
 for_window [class="Spotify"] move scratchpad
 bindsym $mod+y exec spotify --force-device-scale-factor=0.9
 bindsym $mod+Escape [class="Spotify"] scratchpad show; [class="Spotify"] move position center  

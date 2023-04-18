@@ -9,6 +9,6 @@
     - 02_remove_lightdm
     - 03_sudo_nopasswd
     - 04_software_install
-    - 05_services_setup
-    - 06_shell_setup
-    - 07_window_manager_setup
+    - 05_shell_setup
+    - 06_window_manager_setup
+    - 07_services_setup

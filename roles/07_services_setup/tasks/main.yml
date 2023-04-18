@@ -7,10 +7,6 @@
         name: gdm
         enabled: yes
 
-    - name: Starting GDM service
-      service:
-        name: gdm
-        state: started
     # Docker related operations
     - name: Enabling Docker service
       service:
@@ -33,3 +29,17 @@
       systemd:
         name: docker
         state: restarted
+
+    # Xorg Setup  
+    - name: Xorg - Intel video setup
+      template:
+        src: files/xorg/xorg.conf.intel
+        dest: /etc/X11/xorg.conf
+        owner: root
+        group: root
+        mode: 0644
+
+    # Reboot the system afterfwards
+    - name: Reboot the system
+      debug:
+        msg: "You can now reboot the system"

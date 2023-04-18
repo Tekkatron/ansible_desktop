@@ -21,6 +21,7 @@
       - python-pip
       - gnome
       - gdm
+      - gnome-tweaks
       - exa
       - i3-wm
       - alacritty
@@ -40,6 +41,9 @@
       - xorg-xev
       - xsecurelock
       - ttf-hack-nerd
+      - xf86-video-intel
+      - libva-intel-driver
+      - libvdpau-va-gl
       - docker
       - docker-compose
     apt_packages:
