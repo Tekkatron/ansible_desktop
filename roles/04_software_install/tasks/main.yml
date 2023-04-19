@@ -8,7 +8,8 @@
     - name: Print OS
       debug:
         msg: "Your system is: ==============>> {{ my_os }}" 
-      
+    
+    
       # Archlinux specific installation
     - name: Installing Pacman packages
       community.general.pacman:
@@ -36,9 +37,11 @@
         state: latest
       when: my_os == "Ubuntu"
 
-      # OS agnostic install
-    - name: Installing Flatpak packages
+      # OS agnostic install/uninstall
+    - name: Remove Packages
       become: true
-      become_user: "{{ ansible_user }}"
-      flatpak:
-        name: "{{ flatpak_packages }}"
+      package:
+        name: "{{ remove_packages }}"
+        state: absent
+
+    

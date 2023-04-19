@@ -12,6 +12,7 @@
       - xidlehook
       - ttf-consolas-with-powerline
       - i3-gnome-flashback
+      - spotify
     pacman_packages:
       - maim
       - neovim
@@ -29,7 +30,6 @@
       - libreoffice
       - nitrogen
       - zsh
-      - picom
       - i3status-rust
       - flatpak
       - zsh-theme-powerlevel10k
@@ -53,6 +53,7 @@
       - software-properties-common
       - python-pip
       - docker-ce
-
-    flatpak_packages:
-      - com.spotify.Client
+    # flatpak_packages:
+    #   - com.spotify.Client
+    remove_packages:
+      - picom
