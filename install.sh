@@ -1,34 +1,37 @@
 #!/bin/bash
 
-# Función para instalar Ansible en Arch Linux
+##### Set Ansible User 
+ansible_user=$1
+
+# Install to inestall Ansible on Arch Linux
 install_ansible_arch() {
-    echo "Instalando Ansible en Arch Linux..."
+    echo "Installing Ansible on Arch Linux..."
     sudo pacman -Sy ansible --noconfirm
 }
 
-# Función para instalar Ansible en Fedora
+# Install to inestall Ansible on Fedora
 install_ansible_fedora() {
-    echo "Instalando Ansible en Fedora..."
+    echo "Installing Ansible on Fedora..."
     sudo dnf install ansible -y
 }
 
-# Función para instalar Ansible en Ubuntu
+# Install to inestall Ansible on Ubuntu
 install_ansible_ubuntu() {
-    echo "Instalando Ansible en Ubuntu..."
+    echo "Installing Ansible on Ubuntu..."
     sudo apt-get update
     sudo apt-get install software-properties-common -y
     sudo apt-add-repository --yes --update ppa:ansible/ansible
     sudo apt-get install ansible -y
 }
 
-# Función para instalar Ansible en Debian
+# Install to inestall Ansible on Debian
 install_ansible_debian() {
-    echo "Instalando Ansible en Debian..."
+    echo "Installing Ansible on Debian..."
     sudo apt-get update
     sudo apt-get install ansible -y
 }
 
-# Comprobar distribución y ejecutar función correspondiente
+# Check distribution family to proceed
 if [ -f /etc/arch-release ]; then
     install_ansible_arch
 elif [ -f /etc/fedora-release ]; then
@@ -38,10 +41,10 @@ elif [ -f /etc/lsb-release ]; then
 elif [ -f /etc/debian_version ]; then
     install_ansible_debian
 else
-    echo "No se pudo determinar la distribución del sistema."
+    echo "Unable to determine Linux distribution."
     exit 1
 fi
 
-echo "¡Ansible ha sido instalado exitosamente!"
+echo "¡Ansible has been installed sucessfully"
 
-ansible-pull -i ./inventory.ini -e ansible_user=$(whoami) -U https://github.com/Tekkatron/ansible_desktop
+ansible-pull -i ./inventory.ini -e ansible_user=$ansible_user -U https://github.com/Tekkatron/ansible_desktop
