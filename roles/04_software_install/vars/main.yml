@@ -46,6 +46,9 @@
       - libvdpau-va-gl
       - docker
       - docker-compose
+      - transmission-gtk
+      - yt-dlp
+      - vlc
     apt_packages:
       - apt-transport-https
       - ca-certificates
