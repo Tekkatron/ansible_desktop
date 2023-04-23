@@ -13,6 +13,10 @@
       - ttf-consolas-with-powerline
       - i3-gnome-flashback
       - spotify
+      - openshift-client-bin
+      - azure-cli-bin
+      - aws-cli-v2
+      - google-cloud-cli
     pacman_packages:
       - maim
       - neovim
@@ -49,6 +53,13 @@
       - transmission-gtk
       - yt-dlp
       - vlc
+      - youtube-dl
+      - tmuxp
+      - jq
+      - helm
+      - htop
+      - terraform
+      - kubectl
     apt_packages:
       - apt-transport-https
       - ca-certificates
