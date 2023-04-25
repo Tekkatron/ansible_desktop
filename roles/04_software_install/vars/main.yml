@@ -17,6 +17,7 @@
       - azure-cli-bin
       - aws-cli-v2
       - google-cloud-cli
+      - pCloud-drive
     pacman_packages:
       - maim
       - neovim
@@ -60,6 +61,8 @@
       - htop
       - terraform
       - kubectl
+      - nmap
+      - pinta
     apt_packages:
       - apt-transport-https
       - ca-certificates
