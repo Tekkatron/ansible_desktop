@@ -19,6 +19,7 @@
       - google-cloud-cli
       - pCloud-drive
     pacman_packages:
+      - bat
       - maim
       - neovim
       - dmenu
@@ -63,6 +64,7 @@
       - kubectl
       - nmap
       - pinta
+      - discord
     apt_packages:
       - apt-transport-https
       - ca-certificates

@@ -99,6 +99,8 @@
             alias llt="exa --long --header --git --icons --sort=name --tree"
             alias lls="exa --long --header --git --icons --sort=size"
             alias llsr="exa --long --header --git --icons --sort=size --reverse"
+            # CAT Alias
+            alias cat="bat"
     
     - name: Source ZSH config
       shell: >
