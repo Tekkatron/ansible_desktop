@@ -18,6 +18,7 @@
       - aws-cli-v2
       - google-cloud-cli
       - pCloud-drive
+      - masterpdfeditor
     pacman_packages:
       - bat
       - maim
