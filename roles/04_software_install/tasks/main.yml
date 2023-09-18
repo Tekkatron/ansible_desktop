@@ -42,7 +42,7 @@
       when: my_os == "Ubuntu"
     
     - name: Adding Docker Repo Keys
-      ansible.builtin.command: 
+      ansible.builtin.shell: 
         cmd: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
       when: my_os == "Ubuntu"
     
@@ -52,7 +52,7 @@
       when: my_os == "Ubuntu"
   
     - name: Adding Docker Repo to APT Sources
-      ansible.builtin.command: 
+      ansible.builtin.shell: 
         cmd: | 
           echo \
             "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
