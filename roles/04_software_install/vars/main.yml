@@ -71,6 +71,8 @@
       - curl
       - software-properties-common
       - python-pip
+      - zsh
+      - exa
     apt_docker_ubuntu:
       - docker-ce 
       - docker-ce-cli

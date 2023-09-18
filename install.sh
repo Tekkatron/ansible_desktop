@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##### Set Ansible User 
-ansible_user=$1
+ansible_user=$(whoami)
 
 # Install to inestall Ansible on Arch Linux
 install_ansible_arch() {
@@ -22,6 +22,7 @@ install_ansible_ubuntu() {
     sudo apt-get install software-properties-common -y
     sudo apt-add-repository --yes --update ppa:ansible/ansible
     sudo apt-get install ansible -y
+	sudo apt install build-essential curl file git
 }
 
 # Install to inestall Ansible on Debian
