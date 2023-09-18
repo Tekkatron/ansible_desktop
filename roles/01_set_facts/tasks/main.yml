@@ -5,6 +5,7 @@
   package:
     name: python-jmespath
     state: present
+  when: my_os == "Archlinux"
 
 - name: Setting My_OS variable
   set_fact:
