@@ -12,7 +12,6 @@
       - xidlehook
       - ttf-consolas-with-powerline
       - i3-gnome-flashback
-      - spotify
       - openshift-client-bin
       - azure-cli-bin
       - aws-cli-v2
