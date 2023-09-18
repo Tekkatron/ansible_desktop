@@ -36,8 +36,9 @@
         state: latest
       when: my_os == "Ubuntu"
 
-    - name: Keyring Directort permissions set
-      cmd: install -m 0755 -d /etc/apt/keyrings
+    - name: Apply Keyrings
+      ansible.builtin.command: 
+        cmd: install -m 0755 -d /etc/apt/keyrings
       when: my_os == "Ubuntu"
     
     - name: Adding Docker repository
