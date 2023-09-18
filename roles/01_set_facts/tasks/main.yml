@@ -1,12 +1,12 @@
 ---
 # tasks file for set_facts
 
+- name: Setting My_OS variable
+  set_fact:
+    my_os: "{{ hostvars[inventory_hostname] | json_query('ansible_distribution') }}"
+
 - name: Installing basic stuff for Ansible
   package:
     name: python-jmespath
     state: present
   when: my_os == "Archlinux"
-
-- name: Setting My_OS variable
-  set_fact:
-    my_os: "{{ hostvars[inventory_hostname] | json_query('ansible_distribution') }}"
