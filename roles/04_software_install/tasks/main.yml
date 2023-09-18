@@ -48,6 +48,17 @@
         update_cache: yes
       when: my_os == "Ubuntu"
 
+    - name: Update APT again...
+      apt:
+        update_cache: yes
+      when: my_os == "Ubuntu"
+
+    - name: Installing Docker using APT
+      apt:
+        name: "{{ apt_docker_ubuntu }}"
+        state: latest
+      when: my_os == "Ubuntu"
+
       # OS agnostic install/uninstall
     - name: Remove Packages
       become: true
