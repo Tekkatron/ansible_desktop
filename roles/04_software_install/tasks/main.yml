@@ -41,13 +41,25 @@
         cmd: install -m 0755 -d /etc/apt/keyrings
       when: my_os == "Ubuntu"
     
-    - name: Adding Docker repository
-      apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }} stable
-        state: present
-        update_cache: yes
+    - name: Adding Docker Repo Keys
+      ansible.builtin.command: 
+        cmd: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
       when: my_os == "Ubuntu"
-
+    
+    - name: Setting Mode for Docker Keys
+      ansible.builtin.command: 
+        cmd: sudo chmod a+r /etc/apt/keyrings/docker.gpg
+      when: my_os == "Ubuntu"
+  
+    - name: Adding Docker Repo to APT Sources
+      ansible.builtin.command: 
+        cmd: | 
+          echo \
+            "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+            "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      when: my_os == "Ubuntu"
+    
     - name: Update APT again...
       apt:
         update_cache: yes
