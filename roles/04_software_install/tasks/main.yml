@@ -24,17 +24,27 @@
       when: my_os == "Archlinux"
           
       # Ubuntu/Debian based distros specific
+    
+    - name: Update APT
+      apt:
+        update_cache: yes
+      when: my_os == "Ubuntu"
+    
+    - name: Installing APT packages
+      apt:
+        name: "{{ apt_packages }}"
+        state: latest
+      when: my_os == "Ubuntu"
+
+    - name: Keyring Directort permissions set
+      cmd: install -m 0755 -d /etc/apt/keyrings
+      when: my_os == "Ubuntu"
+    
     - name: Adding Docker repository
       apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }} stable
         state: present
         update_cache: yes
-      when: my_os == "Ubuntu"
-
-    - name: Installing APT packages
-      apt:
-        name: "{{ apt_packages }}"
-        state: latest
       when: my_os == "Ubuntu"
 
       # OS agnostic install/uninstall
@@ -43,5 +53,6 @@
       package:
         name: "{{ remove_packages }}"
         state: absent
+      when: my_os == "Archlinux"
 
     
