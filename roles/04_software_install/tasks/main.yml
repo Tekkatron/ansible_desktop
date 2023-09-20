@@ -36,10 +36,16 @@
         state: latest
       when: my_os == "Ubuntu"
 
+    - name: oh-my-zsh Setup
+      ansible.builtin.shell: 
+        cmd: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      when: my_os == "Ubuntu"
+      
     - name: Apply Keyrings
       ansible.builtin.command: 
         cmd: install -m 0755 -d /etc/apt/keyrings
       when: my_os == "Ubuntu"
+
     
     - name: Adding Docker Repo Keys
       ansible.builtin.shell: 
