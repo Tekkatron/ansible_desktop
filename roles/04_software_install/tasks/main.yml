@@ -36,11 +36,16 @@
         state: latest
       when: my_os == "Ubuntu"
 
-    - name: oh-my-zsh Setup
-      ansible.builtin.shell: 
-        cmd: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-      when: my_os == "Ubuntu"
-      
+    - name: Install Oh-My-Zsh
+      shell: |
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      args:
+        executable: /bin/bash
+      environment:
+        ZSH: /home/'{ansible_user}'/.oh-my-zsh 
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+
     - name: Apply Keyrings
       ansible.builtin.command: 
         cmd: install -m 0755 -d /etc/apt/keyrings
