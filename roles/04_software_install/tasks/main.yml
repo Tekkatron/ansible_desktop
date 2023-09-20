@@ -38,11 +38,11 @@
 
     - name: Install Oh-My-Zsh
       shell: |
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        sh -c "rm -r /$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
       args:
         executable: /bin/bash
       environment:
-        ZSH: /home/'{ansible_user}'/.oh-my-zsh 
+        ZSH: /home/"{{ ansible_user }}"/.oh-my-zsh 
       when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 
