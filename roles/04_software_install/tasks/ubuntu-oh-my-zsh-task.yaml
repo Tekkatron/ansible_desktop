@@ -1,6 +1,6 @@
-- name: Install Oh-My-zsh for gloally 
+- name: Install Oh-My-zsh globally 
   git:
-    repo: "https://github.com/robbyrussell/oh-my-zsh"
+    repo: "https://github.com/ohmyzsh/ohmyzsh"
     dest: "/usr/share/oh-my-zsh"
     version: master
     update: no
