@@ -1,0 +1,12 @@
+    - name: Update APT
+      apt:
+        update_cache: yes
+      when: my_os == "Ubuntu"
+    
+    - name: Installing APT packages
+      apt:
+        name: "{{ apt_packages }}"
+        state: latest
+      when: my_os == "Ubuntu"
+
+      

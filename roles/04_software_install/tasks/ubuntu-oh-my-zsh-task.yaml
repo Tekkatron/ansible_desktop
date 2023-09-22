@@ -1,0 +1,6 @@
+- name: Install Oh-My-zsh for gloally 
+  git:
+    repo: "https://github.com/robbyrussell/oh-my-zsh"
+    dest: "/usr/share/oh-my-zsh"
+    version: master
+    update: no

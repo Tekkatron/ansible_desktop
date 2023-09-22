@@ -1,0 +1,11 @@
+  - name: Installing Pacman packages
+    community.general.pacman:
+      name: "{{ pacman_packages }}"
+      state: latest
+    when: my_os == "Archlinux"
+    
+  - name: Installing AUR packages using Yay
+    shell: >
+      yay -S --needed --noconfirm {{ aur_packages | join(" ") }}
+    become_user: "{{ ansible_user }}"
+    when: my_os == "Archlinux"

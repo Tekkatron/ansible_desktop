@@ -11,77 +11,24 @@
     
     
       # Archlinux specific installation
-    - name: Installing Pacman packages
-      community.general.pacman:
-        name: "{{ pacman_packages }}"
-        state: latest
-      when: my_os == "Archlinux"
-      
-    - name: Installing AUR packages using Yay
-      shell: >
-        yay -S --needed --noconfirm {{ aur_packages | join(" ") }}
-      become_user: "{{ ansible_user }}"
-      when: my_os == "Archlinux"
-          
+
+    - name: Install Software on Archlinux based distros
+      include_tasks: arch.yml
+
       # Ubuntu/Debian based distros specific
     
-    - name: Update APT
-      apt:
-        update_cache: yes
+    - name: Install Software on Ubuntu/Debian based distros
+      include_tasks: ubuntu-baseline.yml
       when: my_os == "Ubuntu"
     
-    - name: Installing APT packages
-      apt:
-        name: "{{ apt_packages }}"
-        state: latest
-      when: my_os == "Ubuntu"
-
-    - name: Install Oh-My-Zsh
-      shell: |
-        $(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-      args:
-        executable: /bin/bash
-      environment:
-        ZSH: /home/"{{ ansible_user }}"/.oh-my-zsh 
-      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
-
-
-    - name: Apply Keyrings
-      ansible.builtin.command: 
-        cmd: install -m 0755 -d /etc/apt/keyrings
-      when: my_os == "Ubuntu"
-
-    
-    - name: Adding Docker Repo Keys
-      ansible.builtin.shell: 
-        cmd: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    - name: Install Docker on Ubuntu/Debian based distros
+      include_tasks: ubuntu-docker-task.yml
       when: my_os == "Ubuntu"
     
-    - name: Setting Mode for Docker Keys
-      ansible.builtin.command: 
-        cmd: sudo chmod a+r /etc/apt/keyrings/docker.gpg
-      when: my_os == "Ubuntu"
-  
-    - name: Adding Docker Repo to APT Sources
-      ansible.builtin.shell: 
-        cmd: | 
-          echo \
-            "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-            "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    - name: Install Oh-My-zsh on Ubuntu/Debian based distros
+      include_tasks: ubuntu-docker-task.yml
       when: my_os == "Ubuntu"
     
-    - name: Update APT again...
-      apt:
-        update_cache: yes
-      when: my_os == "Ubuntu"
-
-    - name: Installing Docker using APT
-      apt:
-        name: "{{ apt_docker_ubuntu }}"
-        state: latest
-      when: my_os == "Ubuntu"
-
       # OS agnostic install/uninstall
     - name: Remove Packages
       become: true
