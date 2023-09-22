@@ -7,6 +7,14 @@
         cp /usr/share/oh-my-zsh/zshrc /home/"{{ ansible_user }}/.zshrc"
       become: true
       become_user: "{{ ansible_user }}"
+      when: my_os == "Archlinux"
+ 
+    - name: Shell configuration
+      shell: >
+        cp /usr/share/oh-my-zsh/templates/zshrc.zsh-template /home/"{{ ansible_user }}/.zshrc"
+      become: true
+      become_user: "{{ ansible_user }}"
+      when: my_os == "Ubuntu"
 
     - name: Change default shell to Zsh
       user:
