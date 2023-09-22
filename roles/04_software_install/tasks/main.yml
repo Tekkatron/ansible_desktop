@@ -13,20 +13,25 @@
       # Archlinux specific installation
 
     - name: Install Software on Archlinux based distros
-      include_tasks: arch.yml
+      include_tasks: 
+        file: arch.yml
+      when: my_os == "Archlinux"
 
       # Ubuntu/Debian based distros specific
     
     - name: Install Software on Ubuntu/Debian based distros
-      include_tasks: ubuntu-baseline.yml
+      include_tasks: 
+        file: ubuntu-baseline.yml
       when: my_os == "Ubuntu"
     
     - name: Install Docker on Ubuntu/Debian based distros
-      include_tasks: ubuntu-docker-task.yml
+      include_tasks: 
+        file: ubuntu-docker-task.yml
       when: my_os == "Ubuntu"
     
     - name: Install Oh-My-zsh on Ubuntu/Debian based distros
-      include_tasks: ubuntu-docker-task.yml
+      include_tasks: 
+        file: ubuntu-docker-task.yml
       when: my_os == "Ubuntu"
     
       # OS agnostic install/uninstall
