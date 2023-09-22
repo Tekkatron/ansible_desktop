@@ -31,7 +31,7 @@
     
     - name: Install Oh-My-zsh on Ubuntu/Debian based distros
       include_tasks: 
-        file: ubuntu-docker-task.yaml
+        file: ubuntu-oh-my-zsh-task.yaml
       when: my_os == "Ubuntu"
     
       # OS agnostic install/uninstall
