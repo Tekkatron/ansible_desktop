@@ -11,7 +11,7 @@
  
     - name: Shell configuration
       shell: >
-        cp /usr/share/oh-my-zsh/templates/zshrc.zsh-template /home/"{{ ansible_user }}/.zshrc"
+        cp -R /usr/share/oh-my-zsh/ /home/"{{ ansible_user }}/.oh-my-zsh"
       become: true
       become_user: "{{ ansible_user }}"
       when: my_os == "Ubuntu"
