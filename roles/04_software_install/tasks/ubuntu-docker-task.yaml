@@ -1,7 +1,7 @@
       - name: Apply Keyrings
+        become: True
         ansible.builtin.command: 
           cmd: install -m 0755 -d /etc/apt/keyrings
-          stdin_add_newline: False
         when: my_os == "Ubuntu"
 
       - name: Adding Docker Repo Keys
