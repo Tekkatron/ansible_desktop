@@ -1,10 +1,9 @@
       - name: Apply Keyrings
         ansible.builtin.command: 
           cmd: install -m 0755 -d /etc/apt/keyrings
-          creates: True
+        stdin_add_newline: False
         when: my_os == "Ubuntu"
 
-      
       - name: Adding Docker Repo Keys
         ansible.builtin.shell: 
           cmd: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
