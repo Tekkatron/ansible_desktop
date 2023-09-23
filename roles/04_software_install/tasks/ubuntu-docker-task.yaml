@@ -1,3 +1,9 @@
+      - name: Prepare/Check Keyrings
+        file: 
+          path: /etc/apt/keyrings/docker.gpg
+        state: absent
+        when: my_os == "Ubuntu"
+
       - name: Apply Keyrings
         become: True
         ansible.builtin.command: 
