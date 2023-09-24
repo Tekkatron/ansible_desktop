@@ -5,7 +5,11 @@
     version: master
     update: no
 
-- name: Installing Powerlevel10k Theme
-  ansible.builtin.shell: 
-    cmd: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /usr/share/zsh-theme-powerlevel10k 
+- name: Install Oh-My-zsh globally 
+  git:
+    repo: "https://github.com/romkatv/powerlevel10k.git"
+    dest: "/usr/share/zsh-theme-powerlevel10k"
+    version: master
+    update: no
+    depth: 1
   when: my_os == "Ubuntu"
