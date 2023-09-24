@@ -10,9 +10,8 @@
       when: my_os == "Archlinux"
 
     - name: Copy ZSH template for "{{ ansible_user }}"
-      copy: >
-        src: /home/{{ ansible_user }}/.oh-my-zsh/templates/zshrc.zsh-template 
-        dest: /home/{{ ansible_user }}/.zshrc
+      shell: >
+          cmd: cp /home/{{ ansible_user }}/.oh-my-zsh/templates/zshrc.zsh-templa /home/{{ ansible_user }}/.zshrc
       become: true
       become_user: "{{ ansible_user }}"
       when: my_os == "Ubuntu"
