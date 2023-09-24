@@ -4,3 +4,8 @@
     dest: "/usr/share/oh-my-zsh"
     version: master
     update: no
+
+- name: Installing Powerlevel10k Theme
+  ansible.builtin.shell: 
+    cmd: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /usr/share/zsh-theme-powerlevel10k 
+  when: my_os == "Ubuntu"
