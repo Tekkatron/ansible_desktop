@@ -120,7 +120,6 @@
             alias cat="bat"
     
     - name: Source ZSH config
-      command:
-        cmd: source /home/{{ ansible_user }}/.zshrc
+      command: source /home/{{ ansible_user }}/.zshrc
       become: true
       become_user: "{{ ansible_user }}"
