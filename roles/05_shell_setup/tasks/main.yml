@@ -7,7 +7,6 @@
         cp /usr/share/oh-my-zsh/zshrc /home/"{{ ansible_user }}/.zshrc"
       become: true
       become_user: "{{ ansible_user }}"
-      when: my_os == "Archlinux"
  
     - name: Shell configuration
       shell: >
@@ -33,6 +32,15 @@
           regex: '^ZSH_THEME='
           line: 'ZSH_THEME="zsh-theme-powerlevel10k/powerlevel10k"'
           state: present
+      when: my_os == "Archlinux"
+   
+    - name: Setting up .zshrc file for Powerlevel10k
+      lineinfile:
+          path: /home/{{ ansible_user }}/.zshrc
+          regex: '^ZSH_THEME='
+          line: 'ZSH_THEME="zsh-theme-powerlevel10k/powerlevel10k"'
+          state: present
+      when: my_os == "Ubuntu"
 
     - name: Updating .zshrc file with useful plugins
       lineinfile:

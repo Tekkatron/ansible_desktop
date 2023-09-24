@@ -1,14 +1,39 @@
-- name: Install Oh-My-zsh globally 
+  # Oh-My-Zsh
+
+- name: Install Oh-My-zsh for user "{{ ansible_user }}" 
   git:
     repo: "https://github.com/ohmyzsh/ohmyzsh"
-    dest: "/usr/share/oh-my-zsh"
+    dest: "/home/{{ ansible_user }}/.oh-my-zsh"
     version: master
     update: no
+  when: my_os == "Ubuntu"
 
-- name: Install Oh-My-zsh globally 
+  # Oh-My-Zsh Themes
+
+- name: Install Powerlevel10k for "{{ ansible_user }}"
   git:
     repo: "https://github.com/romkatv/powerlevel10k.git"
-    dest: "/usr/share/zsh-theme-powerlevel10k"
+    dest: "/home/{{ ansible_user }}/.oh-my-zsh/custom/themes/zsh-theme-powerlevel10k"
+    version: master
+    update: no
+    depth: 1
+  when: my_os == "Ubuntu"
+
+  # Oh-My-Zsh Plugins
+
+- name: Install zsh-autosuggestions for "{{ ansible_user }}"
+  git:
+    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+    dest: "/home/{{ ansible_user }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    version: master
+    update: no
+    depth: 1
+  when: my_os == "Ubuntu"
+
+- name: Install zsh-syntax-highlighting for "{{ ansible_user }}"
+  git:
+    repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    dest: "/home/{{ ansible_user }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
     version: master
     update: no
     depth: 1
