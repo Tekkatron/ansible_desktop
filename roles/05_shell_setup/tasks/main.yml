@@ -7,10 +7,11 @@
         cp /usr/share/oh-my-zsh/zshrc /home/"{{ ansible_user }}/.zshrc"
       become: true
       become_user: "{{ ansible_user }}"
+      when: my_os == "Archlinux"
 
     - name: Shell configuration
       copy: >
-        src: "/home/{{ ansible_user }}/.zshrc/.oh-my-zsh/templates/zshrc.zsh-template" 
+        src: "/home/{{ ansible_user }}/.oh-my-zsh/templates/zshrc.zsh-template" 
         dest: "/home/{{ ansible_user }}/.zshrc"
       become: true
       become_user: "{{ ansible_user }}"
